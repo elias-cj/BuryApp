@@ -7,7 +7,7 @@ import { Evento } from '../models/event.model';
   providedIn: 'root'
 })
 export class EventosService {
-  private apiUrl = 'http://66.94.114.8:8080/api/eventos'; // URL base del backend para eventos
+  private apiUrl = 'https://buryapp-backend.onrender.com/api/eventos'; // URL base del backend para eventos
 
   constructor(private http: HttpClient) { }
 

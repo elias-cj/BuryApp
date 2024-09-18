@@ -9,7 +9,7 @@ import { Imagen } from '../models/imagen.model';
   providedIn: 'root'
 })
 export class ImagenesService {
-  private apiUrl = 'http://66.94.114.8:8080/api/imagenes'; // URL base del backend
+  private apiUrl = 'https://buryapp-backend.onrender.com/api/imagenes'; // URL base del backend
 
   constructor(private http: HttpClient) { }
 
