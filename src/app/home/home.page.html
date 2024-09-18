@@ -1,0 +1,61 @@
+<ion-content>
+  <app-nav-bar></app-nav-bar>
+
+  <!-- Encabezado fijo -->
+  <ion-header>
+    <ion-toolbar class="transparent-toolbar">
+      <div class="logo">
+        <img src="/assets/img/header.png" alt="Logo" class="header-logo">
+      </div>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Contenedor principal con detección de clic -->
+  <div class="home-container" fullscreen scroll="true" (click)="resetFilter($event)">
+    <!-- Mostrar alerta de conexión -->
+    <div *ngIf="!isConnected" class="connection-error">
+      <ion-icon name="wifi" class="fa fa-wifi"></ion-icon>
+      <p>No hay conexión a internet.</p>
+      <ion-button (click)="reloadPage()">Recargar</ion-button>
+    </div>
+
+    <!-- Buscador dinámico -->
+    <ion-item class="search-item" *ngIf="isConnected">
+      <ion-input
+        [(ngModel)]="searchTerm"
+        (ionInput)="filterBares($event)"
+        placeholder="Buscar bares...">
+      </ion-input>
+    </ion-item>
+
+    <!-- Botones de filtro por categoría -->
+    <div class="category-filters responsive-category-filters" *ngIf="isConnected">
+      <ion-button *ngFor="let categoria of categorias" (click)="filterByCategoria(categoria.ID, $event)" class="filtros">
+        {{ categoria.nombre }}
+      </ion-button>
+    </div>
+
+    <!-- Mensaje de no encontrado -->
+    <div *ngIf="searchTerm && filteredBares.length === 0 && isConnected" class="no-results">
+      <p>No se encontraron bares</p>
+    </div>
+
+    <!-- Mostrar bares como tarjetas -->
+    <div class="bars-container" *ngIf="!searchTerm && isConnected">
+      <ion-card *ngFor="let bar of filteredBares" [routerLink]="['/detalle-bar', bar.ID]" class="bar-card">
+        <div class="bar-card-header" [style.backgroundImage]="'url(' + bar.LogoURL + ')'"></div>
+        <ion-card-content>
+          <p>{{ bar.Nombre }}</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Mostrar bares como lista -->
+    <ul class="bars-list" *ngIf="searchTerm && isConnected">
+      <li *ngFor="let bar of filteredBares"  [routerLink]="['/detalle-bar', bar.ID]">
+        <img *ngIf="bar.LogoURL" [src]="bar.LogoURL" alt="{{ bar.Nombre }}" class="bar-logo-list">
+        <strong>{{ bar.Nombre }}</strong> - {{ getCategoriaNombre(bar.Categoria_ID) }}<br>
+      </li>
+    </ul>
+  </div>
+</ion-content>
