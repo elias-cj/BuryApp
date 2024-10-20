@@ -1,0 +1,13 @@
+{
+    "app_id": "buryApp.app.com",
+    "name": "buryApp",
+    "integrations": {
+      "capacitor": {
+        "platforms": [
+          "ios",
+          "android"
+        ]
+      }
+    }
+}
+  
